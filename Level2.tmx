@@ -72,12 +72,12 @@
  <tileset firstgid="115" source="Tiles/Tiled Preset Tilesets/enemies.tsx"/>
  <layer id="6" name="Background" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt17sJwDAMBUBN4rFiF8n+axiC2nTGwuGuUfsKoU8EAPzDUx0AADieewIA1rmqA/C6qwNAatUB+NRj/8z2e63Rs46sdu8e+hcAgJNNpIAD9w==
+   eJzt2FEKhCAQAFC/9xAdK4Xq/tfYDfJvKxcsW3wPRJABB0ZwmBAAqCV+1tg6iY4trRMAgAO5R4iF8a9K599MP8T2Yq1LCtf3E3pFAHri33uGuXUCsBlaJ8CuO+fa+S6z3DryjCFt+1kdUyifS7DP+wUA4J+9ATQpCCs=
   </data>
  </layer>
  <layer id="7" name="Deadly" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt1MEJgDAMQNEOqK7gTG7sIVeVgokEeQ9CofQSPnQMAAAAAID/WZOHd5bkYd5+cadHL3r0okcvejw7bs4qevSiR9gSJoMeocvueoQuu+sRqnef/dv0CNW7z77VI+jxnROhXXdJ
+   eJztmEEKgzAQRYO7ror3sr1Cz+SNW0FhmCYaNDOY4T34KG5ifMwkMSUAAAAAAAAA8GJes/D8ZVwDed6GGVUeCR9HTIaRLgYRfJSx9DGkfw/bfU+8GmcPDx+6Pnrz0fq7eI511K/uvn58Ms+i+NA1IWulJyL7oF/5jiVT2l/hw2+sUn1IL1fXj7lwtSKij57PHxF96LN6DS3+EbQgoo8z64f13GuJ4uPqeo4Pn/qo7VfWc6/tbRF9nNlfec/d8j3u4CPXp/BhP+c9H7outnwBo3bwZw==
   </data>
  </layer>
  <layer id="8" name="Platforms" width="100" height="27">
@@ -92,7 +92,7 @@
  </layer>
  <layer id="10" name="Coins" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt2EEKgCAQAMD+UP7/q9XBg1GaWWQ0AyK4COG6og0DAHcYlxaWNr39IT9yda1DY5x7bfO4Xf9SnLKWc6k015nHF9m3cI5agdReTaxj7qf98CbvgxxASk2k4j9U+rLu07dzo1b2xdzk4rmeZ4SDvnZejhzCOWoFAOrN4BcDPw==
+   eJzt190OwBAMgFHvQN//VceFC+JnxtYm+04iZCIR1cacAwCc4GOT2IL2Rn7k6VnL5jzOquNYn/9sHnM7dWm2lpqHnuDs3g+tfWm9FaQzRumr+PjO2CKrOQxoaeVE+kZttYN/chuIAVAiJ0r53Q1b0j3Vjg250pZjM5of9XiHdPrVdSPEELiHXAEAYN0FLxQELw==
   </data>
  </layer>
  <layer id="12" name="Coin Blocks" width="100" height="27">
@@ -102,7 +102,7 @@
  </layer>
  <layer id="11" name="Foreground" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt1lEKQEAUBdDZHVuwBftfAH9KkpmY9zTnlHwI033upBRot57Otdf5lvn8m/m8Q35xZD8me1du5gMHPXgmOqfo92cmG7inI3ks0QvozD93fj1mtN48f/Rv4+s9QQfbTPsxRy+CS62dqb1PZ/qT+XtkCQBQZwMLpA+e
+   eJzt1m0KgCAMgGFvV1foCt7/APV7RLDlvvB9QCKktM1pYwB2U1y1/fBFfnojPzaXuCd+eYj9nti7aiM/+eQ5hTwV6qDDesiOk/f42d/3R+e5AxGokTo6nHcr8c9dX0SO5sf7d18b3nsCNWhzPO3MngReWWtG+xw1E4+Yr0MsAQAAdG74CxET
   </data>
  </layer>
 </map>
