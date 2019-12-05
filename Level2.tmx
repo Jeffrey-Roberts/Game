@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="27" tilewidth="128" tileheight="128" infinite="0" nextlayerid="14" nextobjectid="1">
+<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="100" height="27" tilewidth="128" tileheight="128" infinite="0" nextlayerid="14" nextobjectid="1">
  <tileset firstgid="1" name="ground" tilewidth="128" tileheight="128" tilecount="18" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
@@ -72,37 +72,37 @@
  <tileset firstgid="115" source="Tiles/Tiled Preset Tilesets/enemies.tsx"/>
  <layer id="6" name="Background" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt2FEKhCAQAFC/9xAdK4Xq/tfYDfJvKxcsW3wPRJABB0ZwmBAAqCV+1tg6iY4trRMAgAO5R4iF8a9K599MP8T2Yq1LCtf3E3pFAHri33uGuXUCsBlaJ8CuO+fa+S6z3DryjCFt+1kdUyifS7DP+wUA4J+9ATQpCCs=
-  </data>
- </layer>
- <layer id="7" name="Deadly" width="100" height="27">
-  <data encoding="base64" compression="zlib">
-   eJztmEEKgzAQRYO7ror3sr1Cz+SNW0FhmCYaNDOY4T34KG5ifMwkMSUAAAAAAAAA8GJes/D8ZVwDed6GGVUeCR9HTIaRLgYRfJSx9DGkfw/bfU+8GmcPDx+6Pnrz0fq7eI511K/uvn58Ms+i+NA1IWulJyL7oF/5jiVT2l/hw2+sUn1IL1fXj7lwtSKij57PHxF96LN6DS3+EbQgoo8z64f13GuJ4uPqeo4Pn/qo7VfWc6/tbRF9nNlfec/d8j3u4CPXp/BhP+c9H7outnwBo3bwZw==
+   eAHt2EEKgzAQBVDXHqLHagtt73+NZgqzs7Qjowi+gC5C5osvAROnSSNAgACBLoHbCLp2hckpC7zKFQoIECBAgMB+ArlHiP3CP23+MqjavxTzWOo8eV/My31c9hMnXwhenwABAgRaBXL/0xoqrCzwLFcoILCNwGWbWKkNAnv+185nOXs1TNyIyH8McZ6N9uvbG+Oy5lPgtkrA+l3FpogAAQIECBAgQOAgAm892gfV
   </data>
  </layer>
  <layer id="8" name="Platforms" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJztmEsKwzAMRE3ooqE/cqDc/1rNxiCE5Dip9UmZAdFFQu34SWPZpUDQea0kzjyHbAU+1xb4nNdni4UEFKO6/vMWUwGPaE1KQDGiDGptgEecUB+5ROui1oYFDzrG2+D//0WUgSUPWnv3gl6uR5WHxRpR1vDGfln7Fe8dUB9tWfoVZ4L62JdVzmpeFcljZb+ZtBRbD5E4ZPQrD0atOz0vD5F66uj68NBRvtI+a8Ujm19lPA9p++xoZeyv6nzoeciSDb9Dl77dK2f5eZNyiZKUh5VNi8tji6cQL+HdGxlnLnl4ZNw/6Hw0LqPG6V1nLw/J2O9q9Tr6nkLLQ+nbvf2KzyvSr1o5MnIdeP3t+ZXH/a6Whxl4HMnfX8bJVh9X8CvOZ4RazKV3PXoebT/P0F9p8xo1txZzbU7WHqJ9bySPL2FCEPw=
+   eAHtl11OAzEMhCvEA4g/cSDufy12Hj5pNEpJ0zhLCxtpNXZizzg2Fbun07GODlzfga8tlafFwpnwWPt3oNf/3vn+FR+K3oFjPt6NMftjC/+0Zyz7iK7qADN43ggftge/iv/gGeuAZtB6xlj60fzPB/sZ/zPCZ8FvQ3urF3MBV+vdC7/Pw+17qf+v1akZ8LsQMpPqe7rGezX5AJ+/twyk7RbqM3C7ugDmLHzaHp9PtVbyuZbeW/Az7tZ85iGsXnD7XLCrtZKP/qMnXHHH1K3wqbmCyzmyJ/h79IU7MQd8r+9W7VW10gv1Hw1wdS/QRg9crVvBz99tBZdz0IMWetwKmzuhjc+7NrhC+1pOagSv5TmXRy8cV2llDdJEC1vYWswGbMXM7on7HL/X6b2a1cx8dISuc64vmT/jpx7+DOelufQd7OXRJ2qkX7280XN40XEc5RqNzzuizf5vfg/lXVQbdVGnsHqlBr5w9eJeaOad/Xto5Wz8W5Ra8u7Umphxsz49SJ095iGNli498TNm89NcXja+18bz1mjS47aHjn+LspcpXovbGTfroy90HdmrlzTQRxufekDOmUtFbcmNhjCXx8rmybhZ32tIe5a7l+963E97fndi8rzHfcm5c6IDZj77iRk364u/VZf2Vi9p5P0u9Stq4+5o0ofW3YklhpyKOpwDXhC9Vk2eV2Gj6ShdfGrBd1ylj0bys5+YcbN+8rs/y93LR8v77jbnoJ/1uC85F69zoiPM5WfYyq1e1CNER7hCK2t3PWyvB5sz6qqqzXmx0cxa2fcaqupwLXFSy2ot15V97o7fJy4VTA==
   </data>
  </layer>
  <layer id="13" name="Ladders" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt1qENADAIRUFm6/5D1dc1IH7InSM4nqEK2OQ098x67/07M6vbQ59ZemTRI4seWbr/lR4AAAAAAABAggsWXwd7
+   eAHt0DEOwCAMBEHelv8/Kr2blRXRRENnneHEnOMQIPAngSc+U3lcFy8Fpvd2XtZZD4Gtf+1HnTgEynebR504BLbetR914hAo320edeIQmN5z/Ws+3zMTIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIEDghsALFl8Hew==
   </data>
  </layer>
  <layer id="10" name="Coins" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt190OwBAMgFHvQN//VceFC+JnxtYm+04iZCIR1cacAwCc4GOT2IL2Rn7k6VnL5jzOquNYn/9sHnM7dWm2lpqHnuDs3g+tfWm9FaQzRumr+PjO2CKrOQxoaeVE+kZttYN/chuIAVAiJ0r53Q1b0j3Vjg250pZjM5of9XiHdPrVdSPEELiHXAEAYN0FLxQELw==
+   eAHtl1EOhCAMBb3D7t7/qms/GrUBawUCgSExKqWlzCsGt40GAQhAAAI1CHz2IL/9+tYIRoxHBN6yFp3umme/88UWJ2B1tPw9e3zG9TwswwgBz9ezR+Zi7FwEpDZGrY9eeT05K+Ryq9Vvv7FzVV3Zas766LNEbPGsmUrskVuu7kbOmdwg0JJAak9IH9/WltRjsUWLlE6xKIwuJYAGpQTxn40Ae+Kq6Pl8fbXw1pOA1Glvbdgr6QpQbdLW4+yj/Ow950d/GQH9B7B3L2pkvGrpxcQOgdUJsFdWrwDWDwEIQAACbwj8AVo+BZc=
   </data>
  </layer>
  <layer id="12" name="Coin Blocks" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt0bENACAIBEAWYgT3X0sLW2MjanGXEL4kfAQAAJzRxuTc/Ec/AABQL18fwFZlR7nI3OPvAAAAsNYBeIECMA==
+   eAHt1rENADAIAzAe6v/vdc0BICFkJqaodRaqDAECBAgQIECAAIE+gdcXJWlAQD8DqCIJECBAgAABAgQIhICbOzCWrpMdZXbuSylOPov7yVp9igABAgQIECBAgAABAgSaBD7qvwE8
   </data>
  </layer>
  <layer id="11" name="Foreground" width="100" height="27">
   <data encoding="base64" compression="zlib">
-   eJzt1m0KgCAMgGFvV1foCt7/APV7RLDlvvB9QCKktM1pYwB2U1y1/fBFfnojPzaXuCd+eYj9nti7aiM/+eQ5hTwV6qDDesiOk/f42d/3R+e5AxGokTo6nHcr8c9dX0SO5sf7d18b3nsCNWhzPO3MngReWWtG+xw1E4+Yr0MsAQAAdG74CxET
+   eAHtldENgzAMBdmuXaErdP8BClLvA0sIBZnEQcfPUxLybM4xWRYfCVwn8P1vRaMT82hcd3wvAbijMRrzaFx3PJYAdUHHZjNP9E9IVX4BSMeh7DvCLhSKuqOFUjOVlQB1QYXSn0C8p/pnYEQIVOiDGc7DaE6j43NeKqpsKlbFnCoRsEfqVGOG+y6TFmcPzfTWK4cAtUFzXPcum/eR/9H83uG5o7v/CfBFn0sy98teq90711K3JAJXe6Z1nz2TVLAGG5k3wDp5VZYngFyWgAQkIAEJSEACgcAPkd0QqQ==
+  </data>
+ </layer>
+ <layer id="7" name="Deadly" width="100" height="27">
+  <data encoding="base64" compression="zlib">
+   eAHtmFEOwjAMQ3dA4AqciRuzCrGPqLWTpasI8qQKWid+iydNgm3TpQSUgBJQAkpACSgBJaAElIASUAJKQAmsTOC1Elac9djv/8pVPJ7lt3/biVeu5QMVB175LJr3P1z3fYiZC2Wi54HS+WizM0LE2Szrh9i/qD07N2Vnyu47iOMo6836D1DhL2zGqI6iiHpF6xG7ihadmdWjuVlvVkfsKlo2A9uP5ra1s/eIfVb7/r60n2f9WN/KTGazrB+btYJuZ8ru0cxZb9aP2Eyb8b8BY3h0NmNUR8yoV7QesZkWZfXqGcOj93wzZ4iZ8fX0IjbTPP6shjE8OmNEdcSMekXrEZtpUVavHjHs+3BU2/PNnI047Tzj6+lFbKZ5/FkNYtjeUa2ty+5HnHae9Wb9iM005u3REcP2j2ptXXY/4rTzrDfrH7Hf5VDxKg==
   </data>
  </layer>
 </map>

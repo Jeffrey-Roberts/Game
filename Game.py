@@ -64,7 +64,7 @@ class PlayerCharacter(arcade.Sprite):
 
         # Adjust the collision box. Default includes too much empty space
         # side-to-side. Box is centered at sprite center, (0, 0)
-        self.points = [[-22, -40], [22, -40], [22, 10], [-22, 10]]
+        self.points = [[-22, -40], [22, -40], [22, 15], [-22, 18]]
 
         # --- Load Textures ---
         main_path = "characters/platformChar"
@@ -185,7 +185,7 @@ class MyGame(arcade.Window):
         self.lives = 0
 
         # Levels
-        self.level = 2
+        self.level = 1
 
         # Load sounds
         self.collect_coin_sound = arcade.load_sound("sounds/coin1.wav")
@@ -282,6 +282,8 @@ class MyGame(arcade.Window):
 
         # -- Level 2 Obstacles
         if self.level == 2:
+
+            # Group 1
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
             wall.center_x = GRID_PIXEL_SIZE * 26 + 32
             wall.center_y = GRID_PIXEL_SIZE * 5 + 32
@@ -291,6 +293,7 @@ class MyGame(arcade.Window):
             self.moving_wall_list.append(wall)
             self.wall_list.append(wall)
 
+            # Group 2
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
             wall.center_x = GRID_PIXEL_SIZE * 34 + 32
             wall.center_y = (GRID_PIXEL_SIZE * 3 + 32)
@@ -381,6 +384,43 @@ class MyGame(arcade.Window):
             self.moving_wall_list.append(wall)
             self.wall_list.append(wall)
 
+            # Group 3
+            wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
+            wall.center_x = GRID_PIXEL_SIZE * 70 + 32
+            wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
+            wall.change_x = 2 * TILE_SCALING
+            wall.boundary_right = GRID_PIXEL_SIZE * 76
+            wall.boundary_left = GRID_PIXEL_SIZE * 70
+            self.moving_wall_list.append(wall)
+            self.wall_list.append(wall)
+
+            wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
+            wall.center_x = GRID_PIXEL_SIZE * 82 + 32
+            wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
+            wall.change_x = 2 * TILE_SCALING
+            wall.boundary_right = GRID_PIXEL_SIZE * 82
+            wall.boundary_left = GRID_PIXEL_SIZE * 76
+            self.moving_wall_list.append(wall)
+            self.wall_list.append(wall)
+
+            wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
+            wall.center_x = GRID_PIXEL_SIZE * 82 + 32
+            wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
+            wall.change_x = 2 * TILE_SCALING
+            wall.boundary_right = GRID_PIXEL_SIZE * 88
+            wall.boundary_left = GRID_PIXEL_SIZE * 82
+            self.moving_wall_list.append(wall)
+            self.wall_list.append(wall)
+
+            wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
+            wall.center_x = GRID_PIXEL_SIZE * 94 + 32
+            wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
+            wall.change_x = 2 * TILE_SCALING
+            wall.boundary_right = GRID_PIXEL_SIZE * 94
+            wall.boundary_left = GRID_PIXEL_SIZE * 88
+            self.moving_wall_list.append(wall)
+            self.wall_list.append(wall)
+
     def on_draw(self):
         """ Render the screen. """
 
@@ -403,7 +443,7 @@ class MyGame(arcade.Window):
         self.coin_block_list.draw()
         self.lives_list.draw()
 
-        if self.level == 2:
+        if self.level == 1:
             self.moving_wall_list.draw()
 
         # Draw score
