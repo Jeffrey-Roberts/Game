@@ -35,6 +35,49 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 
 
+class MenuView(arcade.View):
+    def on_show(self):
+        arcade.set_background_color(arcade.color.WHITE)
+
+    def on_draw(self):
+        arcade.start_render()
+
+        arcade.draw_texture_rectangle((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2),
+                                      SCREEN_WIDTH, SCREEN_HEIGHT,
+                                      arcade.load_texture("Backgrounds/backgroundCastles.png"))
+
+        arcade.draw_text("Menu Screen", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+                         arcade.color.BLACK, font_size=50, anchor_x="center")
+        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-75,
+                         arcade.color.GRAY, font_size=20, anchor_x="center")
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        instructions_view = InstructionView()
+        self.window.show_view(instructions_view)
+
+
+class InstructionView(arcade.View):
+    def on_show(self):
+        arcade.set_background_color(arcade.color.ORANGE_PEEL)
+
+    def on_draw(self):
+        arcade.start_render()
+
+        arcade.draw_texture_rectangle((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2),
+                                      SCREEN_WIDTH, SCREEN_HEIGHT,
+                                      arcade.load_texture("Backgrounds/backgroundForest.png"))
+
+        arcade.draw_text("Instructions Screen", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+                         arcade.color.BLACK, font_size=50, anchor_x="center")
+        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-75,
+                         arcade.color.GRAY, font_size=20, anchor_x="center")
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        game_view = GameView()
+        game_view.setup(1)
+        self.window.show_view(game_view)
+
+
 def load_texture_pair(filename):
     """
     Load a texture pair, with the second being a mirror image.
@@ -128,7 +171,7 @@ class PlayerCharacter(arcade.Sprite):
         self.texture = self.walk_textures[self.cur_texture][self.character_face_direction]
 
 
-class MyGame(arcade.Window):
+class GameView(arcade.View):
     """
     Main application class.
     """
@@ -139,7 +182,7 @@ class MyGame(arcade.Window):
         """
 
         # Call the parent class and set up the window
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__()
 
         # Set the path to start with this program
         file_path = os.path.dirname(os.path.abspath(__file__))
@@ -147,6 +190,7 @@ class MyGame(arcade.Window):
 
         # Background
         self.background = None
+        self.game_over = False
 
         # Track the current state of what key is pressed
         self.left_pressed = False
@@ -443,7 +487,7 @@ class MyGame(arcade.Window):
         self.coin_block_list.draw()
         self.lives_list.draw()
 
-        if self.level == 1:
+        if self.level == 2:
             self.moving_wall_list.draw()
 
         # Draw score
@@ -453,10 +497,12 @@ class MyGame(arcade.Window):
 
         # Draw "Game Over"
         if len(self.lives_list) == 0 and self.lives == 0:
-            arcade.draw_text("GAME OVER", self.view_left + (SCREEN_WIDTH // 3),self.view_bottom + 300,
-                             arcade.color.RED, 50, bold=True)
+            arcade.draw_text("GAME OVER", self.view_left + (SCREEN_WIDTH/2),self.view_bottom + 300,
+                             arcade.color.RED, 50, bold=True, anchor_x="center")
             # arcade.play_sound(self.game_over)
             # arcade.load_texture("Backgrounds/GameOver.gif", -502, -352, SCREEN_WIDTH, SCREEN_HEIGHT)
+            game_over_view = GameOverView()
+            self.window.show_view(game_over_view)
 
     def process_keychange(self):
         """
@@ -533,23 +579,22 @@ class MyGame(arcade.Window):
 
         # --- Interaction Check ---
 
-        # See if we hit any deadly platforms
-
+        # Deadly collision
         if arcade.check_for_collision_with_list(self.player_sprite, self.deadly_list) or self.player_sprite.bottom <= 0:
             self.player_sprite.center_x = 1/2 * GRID_PIXEL_SIZE
             self.player_sprite.center_y = PLAYER_START_Y
             self.player_sprite.change_y = 0
             self.lives -= 1
             if len(self.lives_list) > 0:
-                self.lives_list.pop()
+                self.lives_list[0].kill()
 
-        # Checks if user interacts with door
-
+        # Door collision
         if arcade.check_for_collision_with_list(self.player_sprite, self.door_list) and self.interact_pressed:
             self.player_sprite.center_x = GRID_PIXEL_SIZE / 2
             self.level += 1
             self.setup(self.level)
 
+        # Coin Block collision
         coin_block_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
                                                                    self.coin_block_list)
         for block in coin_block_hit_list:
@@ -582,7 +627,7 @@ class MyGame(arcade.Window):
         self.foreground_list.update_animation(delta_time)
         self.background_list.update_animation(delta_time)
 
-        # See if the moving wall hit a boundary and needs to reverse direction.
+        # Wall boundary detection
         for wall in self.wall_list:
 
             if wall.boundary_right and wall.right > wall.boundary_right and wall.change_x > 0:
@@ -594,11 +639,10 @@ class MyGame(arcade.Window):
             if wall.boundary_bottom and wall.bottom < wall.boundary_bottom and wall.change_y < 0:
                 wall.change_y *= -1
 
-        # See if we hit any coins
+        # Coin collision
         coin_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
                                                              self.coin_list)
 
-        # Loop through each coin we hit (if any) and remove it
         for coin in coin_hit_list:
 
             # Figure out how many points this coin is worth
@@ -609,14 +653,11 @@ class MyGame(arcade.Window):
                 points = int(coin.properties['Points'])
                 self.score += points
 
-            # Remove the coin
             coin.remove_from_sprite_lists()
             arcade.play_sound(self.collect_coin_sound)
 
-        # Track if we need to change the viewport
-        changed_viewport = False
-
         # --- Manage Scrolling ---
+        changed_viewport = False
 
         # Scroll left
         left_boundary = self.view_left + LEFT_VIEWPORT_MARGIN
@@ -660,10 +701,44 @@ class MyGame(arcade.Window):
             self.lives_list[i].center_x = self.view_left + 32 + 64 * i
 
 
+class GameOverView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.time_taken = 0
+
+    def on_show(self):
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        arcade.start_render()
+        """
+        Draw "Game over" across the screen.
+        """
+        arcade.draw_text("Game Over", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, 54, anchor_x="center")
+        arcade.draw_text("Click to restart", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, 24, anchor_x="center")
+
+        # time_taken_formatted = f"{round(self.time_taken, 2)} seconds"
+        # arcade.draw_text(f"Time taken: {time_taken_formatted}",
+        #                  WIDTH/2,
+        #                  200,
+        #                  arcade.color.GRAY,
+        #                  font_size=15,
+        #                  anchor_x="center")
+
+        # output_total = f"Total Score: {self.window.total_score}"
+        # arcade.draw_text(output_total, 10, 10, arcade.color.WHITE, 14)
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        game_view = GameView()
+        game_view.setup(1)
+        self.window.show_view(game_view)
+
+
 def main():
     """ Main method """
-    window = MyGame()
-    window.setup(window.level)
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    menu_view = MenuView()
+    window.show_view(menu_view)
     arcade.run()
 
 
