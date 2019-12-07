@@ -711,11 +711,15 @@ class GameOverView(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
+        arcade.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+
         """
         Draw "Game over" across the screen.
         """
-        arcade.draw_text("Game Over", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, 54, anchor_x="center")
-        arcade.draw_text("Click to restart", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, 24, anchor_x="center")
+        arcade.draw_text("Game Over", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        arcade.draw_text("Click to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 75,
+                         arcade.color.GRAY, font_size=20, anchor_x="center")
 
         # time_taken_formatted = f"{round(self.time_taken, 2)} seconds"
         # arcade.draw_text(f"Time taken: {time_taken_formatted}",
