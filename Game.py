@@ -67,9 +67,60 @@ class InstructionView(arcade.View):
                                       SCREEN_WIDTH, SCREEN_HEIGHT,
                                       arcade.load_texture("Backgrounds/backgroundForest.png"))
 
-        arcade.draw_text("Instructions Screen", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+        arcade.draw_text("Instructions", SCREEN_WIDTH/2, SCREEN_HEIGHT-75,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-75,
+
+        # -- Jump
+        arcade.draw_texture_rectangle(SCREEN_WIDTH/3, SCREEN_HEIGHT-145, 80, 80,
+                                      arcade.load_texture("UI/flatDark/flatDark35.png"))
+
+        arcade.draw_text("Jump", SCREEN_WIDTH/2, SCREEN_HEIGHT-160,
+                         arcade.color.BLACK, font_size=35, anchor_x="center")
+
+        arcade.draw_texture_rectangle(SCREEN_WIDTH/3 + 325, SCREEN_HEIGHT-135, 96, 96,
+                                      arcade.load_texture("Characters/platformChar_jump.png"))
+
+        # -- Left
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3, SCREEN_HEIGHT - 230, 80, 80,
+                                      arcade.load_texture("UI/flatDark/flatDark36.png"))
+
+        arcade.draw_text("Left", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 245,
+                         arcade.color.BLACK, font_size=35, anchor_x="center")
+
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3 + 325, SCREEN_HEIGHT - 225, 96, 96,
+                                      arcade.load_texture("Characters/platformChar_walk1MIRROR.png"))
+
+        # -- Down
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3, SCREEN_HEIGHT - 315, 80, 80,
+                                      arcade.load_texture("UI/flatDark/flatDark37.png"))
+
+        arcade.draw_text("Down", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 330,
+                         arcade.color.BLACK, font_size=35, anchor_x="center")
+
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3 + 325, SCREEN_HEIGHT - 310, 96, 96,
+                                      arcade.load_texture("Characters/platformChar_climb1.png"))
+
+        # -- Right
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3, SCREEN_HEIGHT - 400, 80, 80,
+                                      arcade.load_texture("UI/flatDark/flatDark38.png"))
+
+        arcade.draw_text("Right", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 415,
+                         arcade.color.BLACK, font_size=35, anchor_x="center")
+
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3 + 325, SCREEN_HEIGHT - 390, 96, 96,
+                                      arcade.load_texture("Characters/platformChar_walk1.png"))
+
+        # -- Interact
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3, SCREEN_HEIGHT - 485, 80, 80,
+                                      arcade.load_texture("UI/flatDark/flatDark39.png"))
+
+        arcade.draw_text("Interact", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 500,
+                         arcade.color.BLACK, font_size=35, anchor_x="center")
+
+        arcade.draw_texture_rectangle(SCREEN_WIDTH / 3 + 325, SCREEN_HEIGHT - 465, 96, 96,
+                                      arcade.load_texture("Characters/platformChar_Duck.png"))
+
+        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, 75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
@@ -233,9 +284,10 @@ class GameView(arcade.View):
 
         # Load sounds
         self.collect_coin_sound = arcade.load_sound("sounds/coin1.wav")
+        self.interact_sound = arcade.load_sound("sounds/upgrade5.wav")
         self.jump_sound = arcade.load_sound("sounds/jump1.wav")
+        self.hurt_sound = arcade.load_sound("sounds/hurt5.wav")
         self.hit_sound = arcade.load_sound("sounds/hit1.wav")
-        self.game_over = arcade.load_sound("sounds/gameover1.wav")
 
     def setup(self, level):
         """ Set up the game here. Call this function to restart the game. """
@@ -497,8 +549,6 @@ class GameView(arcade.View):
 
         # Draw "Game Over"
         if len(self.lives_list) == 0 and self.lives == 0:
-            arcade.draw_text("GAME OVER", self.view_left + (SCREEN_WIDTH/2),self.view_bottom + 300,
-                             arcade.color.RED, 50, bold=True, anchor_x="center")
             # arcade.play_sound(self.game_over)
             # arcade.load_texture("Backgrounds/GameOver.gif", -502, -352, SCREEN_WIDTH, SCREEN_HEIGHT)
             game_over_view = GameOverView()
@@ -585,6 +635,7 @@ class GameView(arcade.View):
             self.player_sprite.center_y = PLAYER_START_Y
             self.player_sprite.change_y = 0
             self.lives -= 1
+            arcade.play_sound(self.hurt_sound)
             if len(self.lives_list) > 0:
                 self.lives_list[0].kill()
 
@@ -592,6 +643,7 @@ class GameView(arcade.View):
         if arcade.check_for_collision_with_list(self.player_sprite, self.door_list) and self.interact_pressed:
             self.player_sprite.center_x = GRID_PIXEL_SIZE / 2
             self.level += 1
+            arcade.play_sound(self.interact_sound)
             self.setup(self.level)
 
         # Coin Block collision
