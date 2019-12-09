@@ -277,7 +277,7 @@ class GameView(arcade.View):
         self.score = 0
 
         # Keep track of lives
-        self.lives = 0
+        self.lives = 3
 
         # Levels
         self.level = 1
@@ -297,10 +297,10 @@ class GameView(arcade.View):
         self.view_left = 0
 
         # Keep track of the score
-        self.score = 0
+        # self.score = 0
 
         # Keep track of lives
-        self.lives = 3
+        # self.lives = 3
 
         # Background
         if self.level == 1:
@@ -516,6 +516,9 @@ class GameView(arcade.View):
             wall.boundary_left = GRID_PIXEL_SIZE * 88
             self.moving_wall_list.append(wall)
             self.wall_list.append(wall)
+
+    def setup_game(self):
+        self.score = 0
 
     def on_draw(self):
         """ Render the screen. """
