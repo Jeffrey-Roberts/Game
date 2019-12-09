@@ -282,12 +282,16 @@ class GameView(arcade.View):
         # Levels
         self.level = 1
 
+        # Time Taken
+        self.time_taken = 0
+
         # Load sounds
         self.collect_coin_sound = arcade.load_sound("sounds/coin1.wav")
         self.interact_sound = arcade.load_sound("sounds/upgrade5.wav")
         self.jump_sound = arcade.load_sound("sounds/jump1.wav")
         self.hurt_sound = arcade.load_sound("sounds/hurt5.wav")
         self.hit_sound = arcade.load_sound("sounds/hit1.wav")
+        self.game_over = arcade.load_sound("sounds/gameover2.wav")
 
     def setup(self, level):
         """ Set up the game here. Call this function to restart the game. """
@@ -295,12 +299,6 @@ class GameView(arcade.View):
         # Used to keep track scrolling
         self.view_bottom = 0
         self.view_left = 0
-
-        # Keep track of the score
-        # self.score = 0
-
-        # Keep track of lives
-        # self.lives = 3
 
         # Background
         if self.level == 1:
@@ -519,6 +517,7 @@ class GameView(arcade.View):
 
     def setup_game(self):
         self.score = 0
+        self.time_taken = 0
 
     def on_draw(self):
         """ Render the screen. """
@@ -547,14 +546,23 @@ class GameView(arcade.View):
 
         # Draw score
         score_text = f"Score: {self.score}"
-        arcade.draw_text(score_text, 10 + self.view_left, 10 + self.view_bottom,
-                         arcade.csscolor.BLACK, 18)
+        arcade.draw_text(score_text, self.view_left + 10, self.view_bottom + 30,
+                         arcade.color.BLACK, font_size=20)
+
+        # Draw time
+        time_taken_formatted = f"{round(self.time_taken, 2)}"
+        arcade.draw_text(f"Time: {time_taken_formatted}",
+                         self.view_left + 10,
+                         self.view_bottom + 10,
+                         arcade.color.BLACK,
+                         font_size=20,)
 
         # Draw "Game Over"
         if len(self.lives_list) == 0 and self.lives == 0:
             # arcade.play_sound(self.game_over)
             # arcade.load_texture("Backgrounds/GameOver.gif", -502, -352, SCREEN_WIDTH, SCREEN_HEIGHT)
             game_over_view = GameOverView()
+            game_over_view.time_taken = self.time_taken
             self.window.show_view(game_over_view)
 
     def process_keychange(self):
@@ -630,6 +638,8 @@ class GameView(arcade.View):
 
         self.physics_engine.update()
 
+        self.time_taken += delta_time
+
         # --- Interaction Check ---
 
         # Deadly collision
@@ -641,6 +651,8 @@ class GameView(arcade.View):
             arcade.play_sound(self.hurt_sound)
             if len(self.lives_list) > 0:
                 self.lives_list[0].kill()
+            if self.lives == 0:
+                arcade.play_sound(self.game_over)
 
         # Door collision
         if arcade.check_for_collision_with_list(self.player_sprite, self.door_list) and self.interact_pressed:
@@ -654,6 +666,7 @@ class GameView(arcade.View):
                                                                    self.coin_block_list)
         for block in coin_block_hit_list:
             self.score += 1
+            self.window.score += 1
             hit_points = int(block.properties['hit_points'])
             arcade.play_sound(self.collect_coin_sound)
             arcade.play_sound(self.hit_sound)
@@ -704,9 +717,11 @@ class GameView(arcade.View):
             if 'Points' not in coin.properties:
                 print("Warning, collected a coin without a Points property.")
                 self.score += 1
+                self.window.score += 1
             else:
                 points = int(coin.properties['Points'])
                 self.score += points
+                self.window.score += points
 
             coin.remove_from_sprite_lists()
             arcade.play_sound(self.collect_coin_sound)
@@ -771,21 +786,22 @@ class GameOverView(arcade.View):
         """
         Draw "Game over" across the screen.
         """
-        arcade.draw_text("Game Over", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+        arcade.draw_text("Game Over", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 75,
                          arcade.color.WHITE, font_size=50, anchor_x="center")
         arcade.draw_text("Click to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
 
-        # time_taken_formatted = f"{round(self.time_taken, 2)} seconds"
-        # arcade.draw_text(f"Time taken: {time_taken_formatted}",
-        #                  WIDTH/2,
-        #                  200,
-        #                  arcade.color.GRAY,
-        #                  font_size=15,
-        #                  anchor_x="center")
+        time_taken_formatted = f"{round(self.time_taken, 2)} seconds"
+        arcade.draw_text(f"Time: {time_taken_formatted}",
+                         SCREEN_WIDTH / 2,
+                         SCREEN_HEIGHT / 2 - 25,
+                         arcade.color.WHITE,
+                         font_size=20,
+                         anchor_x="center")
 
-        # output_total = f"Total Score: {self.window.total_score}"
-        # arcade.draw_text(output_total, 10, 10, arcade.color.WHITE, 14)
+        output_total = f"Final Score: {self.window.score}"
+        arcade.draw_text(output_total, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 25,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         game_view = GameView()
@@ -796,6 +812,7 @@ class GameOverView(arcade.View):
 def main():
     """ Main method """
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    window.score = 0
     menu_view = MenuView()
     window.show_view(menu_view)
     arcade.run()
