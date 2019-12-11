@@ -225,7 +225,7 @@
  </layer>
  <layer id="4" name="Foreground" width="50" height="20">
   <data encoding="base64" compression="zlib">
-   eAHtlEsOgDAIBXtld+oFNJ5aZsHGGGqDCV08kq74vU4LrclEQAREIEdgtfTTzm5ny5VSdiEB3hDjHWc017UE4o7Ah8vv2AmTWwTKCPg/LxPwaIwedrzvdmaIOXubw9m0m8wyuwY6wzSKn5lrb+eC4UvMAK5UaMQ5VVjJIvAjgRvWxQx9
+   eAHtlDEOwCAIRb1yN9sLaHrq8gcWY1DDAE0+CRMg36dQCo0ESIAEfASqlHfxR/z2HcXqQAJ4QxjeMaOprssQ14wYQnrHRRrDJBBGQP95mIChMfRgx+tuxwxhzmZzmE27yAyz96AzmFr5mbmudi4w7OQc4HKljpwzs3VdlMW/JvABE1MM9w==
   </data>
  </layer>
  <layer id="2" name="Deadly" width="50" height="20">

@@ -482,7 +482,7 @@ class GameView(arcade.View):
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
             wall.center_x = GRID_PIXEL_SIZE * 70 + 32
             wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
-            wall.change_x = 2 * TILE_SCALING
+            wall.change_x = 7 * TILE_SCALING
             wall.boundary_right = GRID_PIXEL_SIZE * 76
             wall.boundary_left = GRID_PIXEL_SIZE * 70
             self.moving_wall_list.append(wall)
@@ -491,7 +491,7 @@ class GameView(arcade.View):
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
             wall.center_x = GRID_PIXEL_SIZE * 82 + 32
             wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
-            wall.change_x = 2 * TILE_SCALING
+            wall.change_x = 7 * TILE_SCALING
             wall.boundary_right = GRID_PIXEL_SIZE * 82
             wall.boundary_left = GRID_PIXEL_SIZE * 76
             self.moving_wall_list.append(wall)
@@ -500,7 +500,7 @@ class GameView(arcade.View):
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
             wall.center_x = GRID_PIXEL_SIZE * 82 + 32
             wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
-            wall.change_x = 2 * TILE_SCALING
+            wall.change_x = 7 * TILE_SCALING
             wall.boundary_right = GRID_PIXEL_SIZE * 88
             wall.boundary_left = GRID_PIXEL_SIZE * 82
             self.moving_wall_list.append(wall)
@@ -509,7 +509,7 @@ class GameView(arcade.View):
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
             wall.center_x = GRID_PIXEL_SIZE * 94 + 32
             wall.center_y = (GRID_PIXEL_SIZE * 16 + 32)
-            wall.change_x = 2 * TILE_SCALING
+            wall.change_x = 7 * TILE_SCALING
             wall.boundary_right = GRID_PIXEL_SIZE * 94
             wall.boundary_left = GRID_PIXEL_SIZE * 88
             self.moving_wall_list.append(wall)
@@ -557,7 +557,7 @@ class GameView(arcade.View):
                          arcade.color.BLACK,
                          font_size=20,)
 
-        # Draw "Game Over"
+        # Game Over Check
         if len(self.lives_list) == 0 and self.lives == 0:
             # arcade.play_sound(self.game_over)
             # arcade.load_texture("Backgrounds/GameOver.gif", -502, -352, SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -656,10 +656,16 @@ class GameView(arcade.View):
 
         # Door collision
         if arcade.check_for_collision_with_list(self.player_sprite, self.door_list) and self.interact_pressed:
-            self.player_sprite.center_x = GRID_PIXEL_SIZE / 2
-            self.level += 1
-            arcade.play_sound(self.interact_sound)
-            self.setup(self.level)
+            if self.level == 2:
+                arcade.play_sound(self.interact_sound)
+                victory_view = VictoryView()
+                victory_view.time_taken = self.time_taken
+                self.window.show_view(victory_view)
+            else:
+                self.player_sprite.center_x = GRID_PIXEL_SIZE / 2
+                self.level += 1
+                arcade.play_sound(self.interact_sound)
+                self.setup(self.level)
 
         # Coin Block collision
         coin_block_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
@@ -769,6 +775,44 @@ class GameView(arcade.View):
         for i in range(len(self.lives_list)):
             self.lives_list[i].center_y = self.view_bottom + (SCREEN_HEIGHT * 15 / 16)
             self.lives_list[i].center_x = self.view_left + 32 + 64 * i
+
+
+class VictoryView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.time_taken = 0
+
+    def on_show(self):
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        arcade.start_render()
+        arcade.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+
+        """
+        Draw "Game over" across the screen.
+        """
+        arcade.draw_text("You Win!", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 75,
+                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        arcade.draw_text("Click to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 75,
+                         arcade.color.GRAY, font_size=20, anchor_x="center")
+
+        time_taken_formatted = f"{round(self.time_taken, 2)} seconds"
+        arcade.draw_text(f"Time: {time_taken_formatted}",
+                         SCREEN_WIDTH / 2,
+                         SCREEN_HEIGHT / 2 - 25,
+                         arcade.color.WHITE,
+                         font_size=20,
+                         anchor_x="center")
+
+        output_total = f"Final Score: {self.window.score}"
+        arcade.draw_text(output_total, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 25,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        game_view = GameView()
+        game_view.setup(1)
+        self.window.show_view(game_view)
 
 
 class GameOverView(arcade.View):
