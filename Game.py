@@ -46,10 +46,13 @@ class MenuView(arcade.View):
                                       SCREEN_WIDTH, SCREEN_HEIGHT,
                                       arcade.load_texture("Backgrounds/backgroundCastles.png"))
 
-        arcade.draw_text("Menu Screen", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+        arcade.draw_text("Coin Collector", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
         arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
+
+        for i in range(10):
+            coin = arcade.Sprite()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         instructions_view = InstructionView()
@@ -241,7 +244,7 @@ class GameView(arcade.View):
 
         # Background
         self.background = None
-        self.game_over = False
+        self.game_over_sound = False
 
         # Track the current state of what key is pressed
         self.left_pressed = False
@@ -291,7 +294,8 @@ class GameView(arcade.View):
         self.jump_sound = arcade.load_sound("sounds/jump1.wav")
         self.hurt_sound = arcade.load_sound("sounds/hurt5.wav")
         self.hit_sound = arcade.load_sound("sounds/hit1.wav")
-        self.game_over = arcade.load_sound("sounds/gameover2.wav")
+        self.game_over_sound = arcade.load_sound("sounds/gameover2.wav")
+        self.victory_sound = arcade.load_sound("sounds/secret4.wav")
 
     def setup(self, level):
         """ Set up the game here. Call this function to restart the game. """
@@ -379,9 +383,9 @@ class GameView(arcade.View):
 
             # Group 1
             wall = arcade.Sprite("Ground/Stone/stoneHalf.png", TILE_SCALING)
-            wall.center_x = GRID_PIXEL_SIZE * 26 + 32
+            wall.center_x = GRID_PIXEL_SIZE * 17 + 32
             wall.center_y = GRID_PIXEL_SIZE * 5 + 32
-            wall.change_x = 5 * TILE_SCALING
+            wall.change_x = -7 * TILE_SCALING
             wall.boundary_right = GRID_PIXEL_SIZE * 26
             wall.boundary_left = GRID_PIXEL_SIZE * 9
             self.moving_wall_list.append(wall)
@@ -559,8 +563,6 @@ class GameView(arcade.View):
 
         # Game Over Check
         if len(self.lives_list) == 0 and self.lives == 0:
-            # arcade.play_sound(self.game_over)
-            # arcade.load_texture("Backgrounds/GameOver.gif", -502, -352, SCREEN_WIDTH, SCREEN_HEIGHT)
             game_over_view = GameOverView()
             game_over_view.time_taken = self.time_taken
             self.window.show_view(game_over_view)
@@ -652,12 +654,12 @@ class GameView(arcade.View):
             if len(self.lives_list) > 0:
                 self.lives_list[0].kill()
             if self.lives == 0:
-                arcade.play_sound(self.game_over)
+                arcade.play_sound(self.game_over_sound)
 
         # Door collision
         if arcade.check_for_collision_with_list(self.player_sprite, self.door_list) and self.interact_pressed:
             if self.level == 2:
-                arcade.play_sound(self.interact_sound)
+                arcade.play_sound(self.victory_sound)
                 victory_view = VictoryView()
                 victory_view.time_taken = self.time_taken
                 self.window.show_view(victory_view)
