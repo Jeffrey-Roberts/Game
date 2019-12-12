@@ -44,15 +44,10 @@ class MenuView(arcade.View):
 
         arcade.draw_texture_rectangle((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2),
                                       SCREEN_WIDTH, SCREEN_HEIGHT,
-                                      arcade.load_texture("Backgrounds/backgroundCastles.png"))
+                                      arcade.load_texture("Backgrounds/backgroundMenu.png"))
 
-        arcade.draw_text("Coin Collector", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
-                         arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-75,
+        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, 25,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
-
-        for i in range(10):
-            coin = arcade.Sprite()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         instructions_view = InstructionView()
